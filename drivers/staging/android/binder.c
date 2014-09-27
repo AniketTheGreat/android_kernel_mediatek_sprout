@@ -41,7 +41,7 @@
 #include "binder.h"
 #include "binder_trace.h"
 
-static DEFINE_MUTEX(binder_main_lock);
+static DEFINE_RT_MUTEX(binder_main_lock);
 static DEFINE_MUTEX(binder_deferred_lock);
 static DEFINE_MUTEX(binder_mmap_lock);
 
