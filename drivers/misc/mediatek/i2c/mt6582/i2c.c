@@ -1082,7 +1082,7 @@ int mtk_i2c_master_send(const struct i2c_client *client,
 	 */
 	return (ret == 1) ? count : ret;
 }
-EXPORT_SYMBOL(mt_i2c_master_send);
+EXPORT_SYMBOL(mtk_i2c_master_send);
 
 /**
  * i2c_master_recv - issue a single I2C message in master receive mode
@@ -1115,7 +1115,7 @@ int mtk_i2c_master_recv(const struct i2c_client *client,
 	 */
 	return (ret == 1) ? count : ret;
 }
-EXPORT_SYMBOL(mt_i2c_master_recv);
+EXPORT_SYMBOL(mtk_i2c_master_recv);
 
 #ifdef I2C_DRIVER_IN_KERNEL
 static S32 _i2c_deal_result_3dcamera(mt_i2c *i2c, struct mt_i2c_msg *msg)

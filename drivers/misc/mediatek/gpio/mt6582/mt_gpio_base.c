@@ -15,6 +15,9 @@
 #include <mach/sync_write.h>
 #include <mach/mt_reg_base.h>
 #include <mach/mt_typedefs.h>
+#ifdef CONFIG_OF
+#include <linux/of_address.h>
+#endif
 #include <mach/mt_gpio.h>
 #include <mach/mt_gpio_core.h>
 #include <mach/mt_gpio_base.h>
@@ -95,9 +98,139 @@ static struct mt_ies_smt_set mt_ies_smt_map[] = {
 	{GPIO120,	GPIO123,1,	7},
 	{GPIO167,	GPIO168,0,	10}
 };
-
+// struct mt_gpio_vbase gpio_vbase;
 static GPIO_REGS *gpio_reg = (GPIO_REGS*)(GPIO_BASE);
+
+// void fill_addr_reg_array(PIN_addr *addr, PIN_addr_t *addr_t)
+// {
+//     unsigned long i;
+// 
+//     for (i = 0; i < MT_GPIO_BASE_MAX; i++) {
+// 	if (strcmp(addr_t->s1,"GPIO_BASE")==0)
+// 		addr->addr = GPIO_BASE_1 + addr_t->offset;
+// 	else if (strcmp(addr_t->s1,"IOCFG_L_BASE")==0)
+// 		addr->addr = IOCFG_L_BASE_1 + addr_t->offset;
+// 	else if (strcmp(addr_t->s1,"IOCFG_B_BASE")==0)
+// 		addr->addr = IOCFG_B_BASE_1 + addr_t->offset;
+// 	else if (strcmp(addr_t->s1,"IOCFG_R_BASE")==0)
+// 		addr->addr = IOCFG_R_BASE_1 + addr_t->offset;
+// 	else if (strcmp(addr_t->s1,"IOCFG_T_BASE")==0)
+// 		addr->addr = IOCFG_T_BASE_1 + addr_t->offset;
+// 	else if (strcmp(addr_t->s1,"MIPI_TX0_BASE")==0)
+// 		addr->addr = MIPI_TX0_BASE_1 + addr_t->offset;
+// 	else if (strcmp(addr_t->s1,"MIPI_RX_ANA_CSI0_BASE")==0)
+// 		addr->addr = MIPI_RX_ANA_CSI0_BASE_1 + addr_t->offset;
+// 	else if (strcmp(addr_t->s1,"MIPI_RX_ANA_CSI1_BASE")==0)
+// 		addr->addr = MIPI_RX_ANA_CSI1_BASE_1 + addr_t->offset;
+// 	else
+// 		addr->addr = 0;
+// 
+// 	//GPIOLOG("GPIO_COUNT=%d ,addr->addr=0x%lx, i=%d\n", GPIO_COUNT, addr->addr, i);
+// 
+// 	addr += 1;
+// 	addr_t += 1;
+//     }
+//     //GPIO_COUNT++;
+// }
+#ifdef CONFIG_OF
 /*---------------------------------------------------------------------------*/
+void get_gpio_vbase(struct device_node *node)
+{
+//     /* Setup IO addresses */
+//     gpio_vbase.gpio_regs = of_iomap(node, 0);
+//     //GPIOLOG("gpio_vbase.gpio_regs=0x%lx\n", gpio_vbase.gpio_regs);
+// 
+//     gpio_reg = (GPIO_REGS*)(GPIO_BASE_1);
+//     
+//     //printk("[DTS] gpio_regs=0x%lx\n", gpio_vbase.gpio_regs);
+//     spin_lock_init(&mtk_gpio_lock);
+}
+/*---------------------------------------------------------------------------*/
+void get_io_cfg_vbase(void)
+{
+//     struct device_node *node = NULL;
+//     //unsigned long i;
+//     
+//     node = of_find_compatible_node(NULL, NULL, "mediatek,IOCFG_L");
+//     if(node){
+// 	/* Setup IO addresses */
+// 	gpio_vbase.IOCFG_L_regs = of_iomap(node, 0);
+// 	//GPIOLOG("gpio_vbase.IOCFG_L_regs=0x%lx\n", gpio_vbase.IOCFG_L_regs);
+//     }
+//     
+//     node = of_find_compatible_node(NULL, NULL, "mediatek,IOCFG_B");
+//     if(node){
+// 	/* Setup IO addresses */
+// 	gpio_vbase.IOCFG_B_regs = of_iomap(node, 0);
+// 	//GPIOLOG("gpio_vbase.IOCFG_B_regs=0x%lx\n", gpio_vbase.IOCFG_B_regs);
+//     }  
+//  
+//     node = of_find_compatible_node(NULL, NULL, "mediatek,IOCFG_R");
+//     if(node){
+// 	/* Setup IO addresses */
+// 	gpio_vbase.IOCFG_R_regs = of_iomap(node, 0);
+// 	//GPIOLOG("gpio_vbase.IOCFG_R_regs=0x%lx\n", gpio_vbase.IOCFG_R_regs);
+//     }    
+// 
+//     node = of_find_compatible_node(NULL, NULL, "mediatek,IOCFG_T");
+//     if(node){
+// 	/* Setup IO addresses */
+// 	gpio_vbase.IOCFG_T_regs = of_iomap(node, 0);
+// 	//GPIOLOG("gpio_vbase.IOCFG_T_regs=0x%lx\n", gpio_vbase.IOCFG_T_regs);
+//     }
+// 
+//     node = of_find_compatible_node(NULL, NULL, "mediatek,MIPI_TX0");
+//     if(node){
+// 	/* Setup IO addresses */
+// 	gpio_vbase.MIPI_TX0_regs = of_iomap(node, 0);
+// 	//GPIOLOG("gpio_vbase.MIPI_TX0_regs=0x%lx\n", gpio_vbase.MIPI_TX0_regs);
+//     }
+// 
+//     node = of_find_compatible_node(NULL, NULL, "mediatek,MIPI_RX_ANA_CSI0");
+//     if(node){
+// 	/* Setup IO addresses */
+// 	gpio_vbase.MIPI_RX_CSI0_regs = of_iomap(node, 0);
+// 	//GPIOLOG("gpio_vbase.MIPI_RX_CSI0_regs=0x%lx\n", gpio_vbase.MIPI_RX_CSI0_regs);
+//     }
+// 
+//     node = of_find_compatible_node(NULL, NULL, "mediatek,MIPI_RX_ANA_CSI1");
+//     if(node){
+// 	/* Setup IO addresses */
+// 	gpio_vbase.MIPI_RX_CSI1_regs = of_iomap(node, 0);
+// 	//GPIOLOG("gpio_vbase.MIPI_RX_CSI1_regs=0x%lx\n", gpio_vbase.MIPI_RX_CSI1_regs);
+//     }
+// 
+// 
+//     fill_addr_reg_array(IES_addr, IES_addr_t);
+//     fill_addr_reg_array(SMT_addr, SMT_addr_t);
+//     fill_addr_reg_array(PULLEN_addr, PULLEN_addr_t);
+//     fill_addr_reg_array(PULL_addr, PULL_addr_t);
+//     fill_addr_reg_array(PU_addr, PU_addr_t);
+//     fill_addr_reg_array(PD_addr, PD_addr_t);
+// #if 0
+//     for (i = 0; i < MT_GPIO_BASE_MAX; i++) {
+// 	if (strcmp(IES_addr_t[i].s1,"GPIO_BASE")==0)
+// 		IES_addr[i].addr = GPIO_BASE_1 + IES_addr_t[i].offset;
+// 	else if (strcmp(IES_addr_t[i].s1,"IOCFG_L_BASE")==0)
+// 		IES_addr[i].addr = IOCFG_L_BASE_1 + IES_addr_t[i].offset;
+// 	else if (strcmp(IES_addr_t[i].s1,"IOCFG_B_BASE")==0)
+// 		IES_addr[i].addr = IOCFG_B_BASE_1 + IES_addr_t[i].offset;
+// 	else if (strcmp(IES_addr_t[i].s1,"IOCFG_R_BASE")==0)
+// 		IES_addr[i].addr = IOCFG_R_BASE_1 + IES_addr_t[i].offset;
+// 	else if (strcmp(IES_addr_t[i].s1,"IOCFG_T_BASE")==0)
+// 		IES_addr[i].addr = IOCFG_T_BASE_1 + IES_addr_t[i].offset;
+// 	else if (strcmp(IES_addr_t[i].s1,"MIPI_TX0_BASE")==0)
+// 		IES_addr[i].addr = MIPI_TX0_BASE_1 + IES_addr_t[i].offset;
+// 	else if (strcmp(IES_addr_t[i].s1,"MIPI_RX_ANA_CSI0_BASE")==0)
+// 		IES_addr[i].addr = MIPI_RX_ANA_CSI0_BASE_1 + IES_addr_t[i].offset;
+// 	else if (strcmp(IES_addr_t[i].s1,"MIPI_RX_ANA_CSI1_BASE")==0)
+// 		IES_addr[i].addr = MIPI_RX_ANA_CSI1_BASE_1 + IES_addr_t[i].offset;
+// 	else
+// 		IES_addr[i].addr = 0;
+//     }
+// #endif
+}
+#endif
 int mt_set_gpio_dir_base(unsigned long pin, unsigned long dir)
 {
     unsigned long pos;
@@ -113,6 +246,8 @@ int mt_set_gpio_dir_base(unsigned long pin, unsigned long dir)
         GPIO_SET_BITS((1L << bit), &reg->dir[pos].set);
     return RSUCCESS;
 }
+/*---------------------------------------------------------------------------*/
+
 /*---------------------------------------------------------------------------*/
 int mt_get_gpio_dir_base(unsigned long pin)
 {    

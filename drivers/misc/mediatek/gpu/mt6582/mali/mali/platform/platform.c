@@ -31,6 +31,11 @@
 
 static void mali_platform_device_release(struct device *device);
 static int mali_pm_suspend(struct device *device);
+#ifdef CONFIG_PM_RUNTIME
+static int mali_runtime_suspend(struct device *device);
+static int mali_runtime_idle(struct device *device);
+static int mali_runtime_resume(struct device *device);
+#endif
 static int mali_pm_resume(struct device *device);
 void mali_gpu_utilization_callback(struct mali_gpu_utilization_data *data);
 

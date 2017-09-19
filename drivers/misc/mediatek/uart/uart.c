@@ -87,12 +87,12 @@ static DEFINE_SPINLOCK(mtk_uart_vfifo_port_lock);
 #define VFIFO_INIT_RX(c, i, n) \
     {.ch = (c), .size = (n), .trig = VFF_RX_THRE(n), .type = UART_RX_VFIFO, \
      .port = NULL, .addr = NULL,             \
-     .entry = ATOMIC_INIT(0), .reg_cb = ATOMIC_INIT(0), .iolock=__SPIN_LOCK_UNLOCKED(mtk_uart_vfifo_port[i].lock),
+     .entry = ATOMIC_INIT(0), .reg_cb = ATOMIC_INIT(0), .iolock=__SPIN_LOCK_UNLOCKED(mtk_uart_vfifo_port[i].lock), }
 /*---------------------------------------------------------------------------*/
 #define VFIFO_INIT_TX(c, i, n) \
     {.ch = (c), .size = (n), .trig = VFF_TX_THRE(n), .type = UART_TX_VFIFO, \
      .port = NULL,         \
-     .addr = NULL, .entry = ATOMIC_INIT(0), .reg_cb = ATOMIC_INIT(0), .iolock=__SPIN_LOCK_UNLOCKED(mtk_uart_vfifo_port[i].lock),
+     .addr = NULL, .entry = ATOMIC_INIT(0), .reg_cb = ATOMIC_INIT(0), .iolock=__SPIN_LOCK_UNLOCKED(mtk_uart_vfifo_port[i].lock),}
 /*---------------------------------------------------------------------------*/
 static struct mtk_uart_vfifo mtk_uart_vfifo_port[] = {
     VFIFO_INIT_TX(P_DMA_UART1_TX, 0, C_UART1_VFF_TX_SIZE),

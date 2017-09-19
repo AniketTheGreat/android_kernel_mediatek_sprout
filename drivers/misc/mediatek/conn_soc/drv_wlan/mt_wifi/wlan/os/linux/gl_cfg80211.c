@@ -2893,7 +2893,7 @@ mtk_cfg80211_testmode_get_lte_channel(
 	NLA_PUT_U32(skb, NL80211_TESTMODE_AVAILABLE_CHAN_5G_BASE_149, 	AcsChnRepot[NL80211_TESTMODE_AVAILABLE_CHAN_5G_BASE_149-1]);
 	NLA_PUT_U32(skb, NL80211_TESTMODE_AVAILABLE_CHAN_5G_BASE_184, 	AcsChnRepot[NL80211_TESTMODE_AVAILABLE_CHAN_5G_BASE_184-1]);
 
-    DBGLOG(P2P, INFO,("[Auto Channel]Relpy AcsChanInfo[%x:%x:%x:%x]\n",AcsChnRepot[0],AcsChnRepot[1],AcsChnRepot[2],AcsChnRepot[3]));
+    DBGLOG(P2P, INFO,("[Auto Channel]Relpy AcsChanInfo[%x:%x:%x:%x]\n",(unsigned int) AcsChnRepot[0],(unsigned int)AcsChnRepot[1],(unsigned int)AcsChnRepot[2],(unsigned int)AcsChnRepot[3]));
 
 	i4Status = cfg80211_testmode_reply(skb);
 

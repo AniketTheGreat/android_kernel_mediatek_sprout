@@ -18,6 +18,7 @@
 #include <asm/io.h>
 #include <linux/spinlock.h>
 #include <linux/musb/mtk_musb.h>
+#include <linux/musb/musb_core.h>
 #include "usb20.h"
 
 #define FRA (48)

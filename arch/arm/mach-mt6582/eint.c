@@ -35,7 +35,7 @@
 #include <linux/irqchip/chained_irq.h>
 
 #define EINT_DEBUG 0
-#if(EINT_DEBUG == 1)
+#if EINT_DEBUG==1
 #define dbgmsg printk
 #else
 #define dbgmsg(...)

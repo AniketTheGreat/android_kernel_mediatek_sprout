@@ -11,14 +11,10 @@
 * You should have received a copy of the GNU General Public License along with this program.
 * If not, see <http://www.gnu.org/licenses/>.
 */
-
 #ifndef __CUST_GPIO_USAGE_H__
 #define __CUST_GPIO_USAGE_H__
-
 #include <mach/gpio_usage_para.h>
-
 extern struct _gpio_usage *gpio_usage;
-
 #define GPIO_EINT_CHG_STAT_PIN			(gpio_usage->eint_chg_stat_pin | 0x80000000)
 #define GPIO_EINT_CHG_STAT_PIN_M_GPIO			gpio_usage->eint_chg_stat_pin_m_gpio
 #define GPIO_EINT_CHG_STAT_PIN_M_PWM			gpio_usage->eint_chg_stat_pin_m_pwm
@@ -278,13 +274,6 @@ extern struct _gpio_usage *gpio_usage;
 #define GPIO_MSDC1_DAT3            (gpio_usage->msdc1_dat3 | 0x80000000)
 #define GPIO_MSDC1_DAT3_M_GPIO            gpio_usage->msdc1_dat3_m_gpio
 #define GPIO_MSDC1_DAT3_M_MSDC1_DAT            gpio_usage->msdc1_dat3_m_msdc1_dat
-
-
 /*Output for default variable names*/
 /*@XXX_XX_PIN in gpio.cmp          */
-
-
-
 #endif /* __CUST_GPIO_USAGE_H__ */
-
-

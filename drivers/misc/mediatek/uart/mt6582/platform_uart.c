@@ -23,6 +23,9 @@
 #include <cust_gpio_usage.h>
 #include <linux/uart/mtk_uart.h>
 #include <linux/uart/mtk_uart_intf.h>
+#include <linux/of_irq.h>
+#include <linux/of_address.h>
+
 
 static void save_tx_raw_data(struct mtk_uart *uart,void *addr);
 static void reset_rx_raw_data(struct mtk_uart *uart);
@@ -138,6 +141,121 @@ unsigned int get_modem_uart(int idx)
     #endif
 }
 /*---------------------------------------------------------------------------*/
+
+
+#ifdef CONFIG_OF
+void* get_apdma_uart0_base(void)
+{
+    struct device_node *node = NULL;
+    struct device_node *apdma_uart0_node = NULL;
+    void *base;
+    unsigned int apdma_reg;
+    unsigned int apdma_uart0_reg;
+    unsigned int apdma_uart0_offset;
+
+    node = of_find_compatible_node(NULL, NULL, "mediatek,AP_DMA");
+    apdma_uart0_node = of_find_compatible_node(NULL, NULL, "mediatek,AP_DMA_UART0_TX");
+
+    base = of_iomap(node, 0);
+
+    if (of_property_read_u32_index(node, "reg", 0, &apdma_reg)){
+	printk("[UART] get AP_DMA reg from DTS fail!!\n");
+    }
+    if (of_property_read_u32_index(apdma_uart0_node, "reg", 0, &apdma_uart0_reg)){
+	printk("[UART] get AP_DMA_UART0_TX reg from DTS fail!!\n");
+    }
+
+    apdma_uart0_offset = apdma_uart0_reg - apdma_reg;
+    base += apdma_uart0_offset;
+    printk("[UART] apdma uart0 base=0x%p\n", base);
+
+    return base;
+}
+void set_uart_default_settings(int idx)
+{
+    struct device_node *node = NULL;
+    unsigned int irq_info[3] = {0, 0, 0};
+    u32 phys_base;
+
+    switch (idx) {
+    case 0:
+ 	node = of_find_compatible_node(NULL, NULL, "mediatek,AP_UART0");
+ 	break;
+    case 1:
+	node = of_find_compatible_node(NULL, NULL, "mediatek,AP_UART1");
+ 	break;
+    case 2:
+	node = of_find_compatible_node(NULL, NULL, "mediatek,AP_UART2");
+	break;
+    case 3:
+	node = of_find_compatible_node(NULL, NULL, "mediatek,AP_UART3");
+ 	break;
+    default:
+  	break;
+    }
+
+    if(node){
+	/* iomap registers */
+	mtk_uart_default_settings[idx].uart_base = (unsigned long)of_iomap(node, 0);
+	/* get IRQ ID */
+	mtk_uart_default_settings[idx].irq_num = irq_of_parse_and_map(node, 0);
+    }
+
+    /* phys registers */
+    if (of_property_read_u32_index(node, "reg", 0, &phys_base)){
+	printk("[UART%d] get phys regs from DTS fail!!\n", idx);
+    }
+    mtk_uart_default_settings[idx].uart_phys_base = phys_base;
+
+    /* get the interrupt line behaviour */
+    if (of_property_read_u32_array(node, "interrupts",
+			irq_info, ARRAY_SIZE(irq_info))){
+	printk("[UART%d] get irq flags from DTS fail!!\n", idx);
+    }
+    mtk_uart_default_settings[idx].irq_flags = (unsigned long)irq_info[2];
+    printk("[UART%d] phys_regs=0x%lx, regs=0x%lx, irq=%d, irq_flags=0x%lx \n", idx, mtk_uart_default_settings[idx].uart_phys_base, mtk_uart_default_settings[idx].uart_base, mtk_uart_default_settings[idx].irq_num, mtk_uart_default_settings[idx].irq_flags);
+}
+unsigned int get_uart_vfifo_irq_id(int idx)
+{
+    struct device_node *node = NULL;
+    unsigned int irq_id;
+
+    switch (idx) {
+    case 0:
+ 	node = of_find_compatible_node(NULL, NULL, "mediatek,AP_DMA_UART0_TX");
+ 	break;
+    case 1:
+	node = of_find_compatible_node(NULL, NULL, "mediatek,AP_DMA_UART0_RX");
+ 	break;
+    case 2:
+	node = of_find_compatible_node(NULL, NULL, "mediatek,AP_DMA_UART1_TX");
+	break;
+    case 3:
+	node = of_find_compatible_node(NULL, NULL, "mediatek,AP_DMA_UART1_RX");
+ 	break;
+    case 4:
+ 	node = of_find_compatible_node(NULL, NULL, "mediatek,AP_DMA_UART2_TX");
+ 	break;
+    case 5:
+	node = of_find_compatible_node(NULL, NULL, "mediatek,AP_DMA_UART2_RX");
+ 	break;
+    case 6:
+	node = of_find_compatible_node(NULL, NULL, "mediatek,AP_DMA_UART3_TX");
+	break;
+    case 7:
+	node = of_find_compatible_node(NULL, NULL, "mediatek,AP_DMA_UART3_RX");
+ 	break;
+    default:
+  	break;
+    }
+    irq_id = irq_of_parse_and_map(node, 0);
+    printk("[UART_DMA%d] irq=%d\n", idx, irq_id);
+
+    return irq_id;
+}
+
+#endif
+
 #ifdef UART_FCR_USING_SW_BACK_UP
 inline static void __write_fcr_register(struct mtk_uart *uart, u32 data)
 {
