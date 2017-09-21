@@ -91,6 +91,7 @@ dtb-$(CONFIG_ARCH_KIRKWOOD) += kirkwood-cloudbox.dtb \
 dtb-$(CONFIG_ARCH_MARCO) += marco-evb.dtb
 dtb-$(CONFIG_ARCH_MSM) += msm8660-surf.dtb \
 	msm8960-cdp.dtb
+dtb-$(CONFIG_ARCH_MT6582) += mt6582.dtb
 dtb-$(CONFIG_ARCH_MT8135) += mt8135-ca7x2-ca15x2.dtb \
 	mt8135-ca7x2-ca15x1.dtb \
 	mt8135-ca7x1-ca15x1.dtb \
